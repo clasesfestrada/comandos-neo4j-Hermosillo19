@@ -38,7 +38,7 @@ AS row
 
 MATCH(a:Estudiante) , (b:Estudiante)
 WHERE a.id = row.estudiante_origen AND b.id = row.estudiante_destino
-CREATE (a)-[:ES_AMIGO]->(b);
+CREATE (a)-[:AMIGO_DE]->(b);
 
 
 LOAD CSV WITH HEADERS FROM
