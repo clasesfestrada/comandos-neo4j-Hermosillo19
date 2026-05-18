@@ -36,16 +36,22 @@ LOAD CSV WITH HEADERS FROM
 'https://raw.githubusercontent.com/clasesfestrada/comandos-neo4j-Hermosillo19/refs/heads/main/data/amistades.csv'
 AS row
 
-CREATE (estudiante_origen)-[:Es_amigo]->(estudiante_destino);
+MATCH(a:Estudiante) , (b:Estudiante)
+WHERE a.id = row.estudiante_origen AND b.id = row.estudiante_destino
+CREATE (a)-[:ES_AMIGO]->(b);
 
 
 LOAD CSV WITH HEADERS FROM
 'https://raw.githubusercontent.com/clasesfestrada/comandos-neo4j-Hermosillo19/refs/heads/main/data/inscripciones.csv'
 AS row
 
-CREATE (estudiante_id)-[:Inscrito_en{Calificaion:toInteger(row.calificacion)}]->(materia_id);
+MATCH(a:Estudiante) , (b:Materia)
+WHERE a.id = row.estudiante_id AND b.id = row.materia_id
+CREATE (a)-[:INSCRITO_EN {Calificaion:row.calificacion}]->(b);
 
 
 LOAD CSV WITH HEADERS FROM 'https://raw.githubusercontent.com/clasesfestrada/comandos-neo4j-Hermosillo19/refs/heads/main/data/imparticiones.csv' AS row
 
-CREATE (profesor_id)-[:Imparte]->(materia_id);
+MATCH(a:Profesor) , (b:Materia)
+WHERE a.id = row.profesor_id AND b.id = row.materia_id
+CREATE (a)-[:IMPARTE]->(b);
